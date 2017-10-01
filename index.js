@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const keys = require('./config/keys');
 require('./models/User');
+require('./models/Survey');
 require('./services/passport');
 
 /* *** Connection to Database *** */
@@ -28,6 +29,7 @@ app.use(bodyParser.json()); /* so express can parse body of post requests */
 // the require statement returns a function
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 /* *** Config for Production *** */
 

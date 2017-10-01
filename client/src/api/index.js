@@ -4,31 +4,61 @@ const headers = {
   Cache: 'no-cache'
 };
 
-export default {
-  // some notes:
-  // 1 - the .text() and manual json conversion
-  // handles an undefined (i.e. empty-string) response
-  // as well as a json response
-  // 2 - the credentials key in the fetch config
-  // sends along the cookies with the req
-  fetchUser() {
-    return fetch('api/current_user', {
-      method: 'GET',
-      headers,
-      credentials: 'same-origin'
-    })
-      .then(res => res.text())
-      .then(text => (text.length ? JSON.parse(text) : null));
-  },
+// some notes:
+// 1 - the .text() and manual json conversion
+// handles an undefined (i.e. empty-string) response
+// as well as a json response or error response
+// 2 - the credentials key in the fetch config
+// sends along the cookies with the req
+const get = url => {
+  return fetch(url, {
+    method: 'GET',
+    headers,
+    credentials: 'same-origin'
+  })
+    .then(res => res.text())
+    .then(text => {
+      if (!text.length) {
+        return null;
+      }
+      try {
+        return JSON.parse(text);
+      } catch (err) {
+        return text;
+      }
+    });
+};
 
+const post = (url, body) => {
+  return fetch(url, {
+    method: 'POST',
+    headers,
+    credentials: 'same-origin',
+    body: JSON.stringify(body)
+  })
+    .then(res => res.text())
+    .then(text => {
+      if (!text.length) {
+        return null;
+      }
+      try {
+        return JSON.parse(text);
+      } catch (err) {
+        return text;
+      }
+    });
+};
+
+window.post = post;
+
+export default {
+  fetchUser() {
+    return get('/api/current_user');
+  },
   postToken(token) {
-    return fetch('api/stripe', {
-      method: 'POST',
-      headers,
-      credentials: 'same-origin',
-      body: JSON.stringify(token)
-    })
-      .then(res => res.text())
-      .then(text => (text.length ? JSON.parse(text) : null));
+    return post('/api/stripe', token);
+  },
+  createSurvey(survey) {
+    return post('/api/surveys', survey);
   }
 };
