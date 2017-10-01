@@ -6,6 +6,11 @@ export const fetchUser = () => async dispatch => {
   dispatch({ type: FETCH_USER, payload: res });
 };
 
+export const handleToken = token => async dispatch => {
+  const res = await api.postToken(token);
+  dispatch({ type: FETCH_USER, payload: res });
+};
+
 /* code above is the same as below */
 // function fetchUser() {
 //   return function(dispatch) {

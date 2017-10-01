@@ -19,5 +19,16 @@ export default {
     })
       .then(res => res.text())
       .then(text => (text.length ? JSON.parse(text) : null));
+  },
+
+  postToken(token) {
+    return fetch('api/stripe', {
+      method: 'POST',
+      headers,
+      credentials: 'same-origin',
+      body: JSON.stringify(token)
+    })
+      .then(res => res.text())
+      .then(text => (text.length ? JSON.parse(text) : null));
   }
 };
