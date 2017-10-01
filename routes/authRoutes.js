@@ -9,7 +9,13 @@ module.exports = app => {
   );
 
   // this will see the 'code' param in the query string
-  app.get('/auth/google/callback', passport.authenticate('google'));
+  app.get(
+    '/auth/google/callback',
+    passport.authenticate('google'),
+    (req, res) => {
+      res.redirect('/surveys');
+    }
+  );
 
   app.get('/api/current_user', (req, res) => {
     // cookie-session pkg assigns data to req.session
@@ -28,6 +34,6 @@ module.exports = app => {
 
   app.get('/api/logout', (req, res) => {
     req.logout(); // comes from cookie-session pkg (i think?)
-    res.send(req.user);
+    res.redirect('/');
   });
 };
