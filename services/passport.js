@@ -21,8 +21,9 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: '/auth/google/callback',
-      proxy: true
+      passReqToCallback: true,
+      proxy: true,
+      callbackURL: '/auth/google/callback'
       // why we need proxy: true is b/c of relative path
       // of callbackURL above.  On the google api dev console our
       // callbackURL is set as https://<app>.herokuapp.com/<callback>
