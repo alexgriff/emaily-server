@@ -21,7 +21,7 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: '/auth/google/callback',
+      callbackURL: keys.googleCallbackURL,
       proxy: true
       // why we need proxy: true is b/c of relative path
       // of callbackURL above.  On the google api dev console our
