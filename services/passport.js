@@ -21,17 +21,8 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: '/auth/google/callback',
-      proxy: true
-      // why we need proxy: true is b/c of relative path
-      // of callbackURL above.  On the google api dev console our
-      // callbackURL is set as https://<app>.herokuapp.com/<callback>
-      // because when we make a request to heroku, it hits a proxy
-      // server (load balances etc) which then redirects to actual server.
-      // GoogleStrategy sees the redirect and thinks that its no longer secure
-      // so changes protocol to http://<app>
-      // solutions are either 1- include proxy: true
-      // or 2- set two diff env variables with a full path
+      proxy: true,
+      callbackURL: '/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) => {
       User.findOne({ googleId: profile.id }).then(existingUser => {
