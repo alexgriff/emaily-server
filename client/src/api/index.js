@@ -49,8 +49,6 @@ const post = (url, body) => {
     });
 };
 
-window.post = post;
-
 export default {
   fetchUser() {
     return get('/api/current_user');
