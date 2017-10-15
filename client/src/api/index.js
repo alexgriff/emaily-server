@@ -58,5 +58,8 @@ export default {
   },
   createSurvey(survey) {
     return post('/api/surveys', survey);
+  },
+  fetchSurveys() {
+    return get('/api/surveys');
   }
 };

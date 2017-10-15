@@ -1,4 +1,4 @@
-import { FETCH_USER } from './types';
+import { FETCH_USER, FETCH_SURVEYS } from './types';
 import api from '../api';
 
 export const fetchUser = () => async dispatch => {
@@ -25,3 +25,8 @@ export const submitSurvey = (values, history) => async dispatch => {
 //     });
 //   };
 // }
+
+export const fetchSurveys = () => async dispatch => {
+  const surveys = await api.fetchSurveys();
+  dispatch({ type: FETCH_SURVEYS, payload: surveys });
+};
